@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tools
+  labels:
+    app: tools
+spec:
+  containers:
+  - name: tools
+    image: alpine
+    resources: {}
+    # command: [""]
+    # args: ["-c", "google.com"]

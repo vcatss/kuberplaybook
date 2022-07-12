@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: mongodb-0
+  labels:
+    env: test
+    defacementComponent: mongodb-0
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      defacementComponent: mongodb-0
+  template:
+    metadata:
+      labels:
+        defacementComponent: mongodb-0
+    spec:
+      terminationGracePeriodSeconds: 10
+      affinity:
+         podAntiAffinity:
+           requiredDuringSchedulingIgnoredDuringExecution:
+           - labelSelector:
+               matchExpressions:
+               - key: "app"
+                 operator: In
+                 values:
+                 - mongo
+             topologyKey: "kubernetes.io/hostname"
+      containers:
+        - image: mtlbillyfong/mongodb-replica-set:20200330-stable-1
+          name: mongodb-0
+          resources:
+            requests:
+              ephemeral-storage: "1Gi"
+              cpu: "500m"
+              memory: "1Gi"
+            limits:
+              ephemeral-storage: "2Gi"
+              cpu: "700m"
+              memory: "2Gi"
+          env:
+            - name: "MONGO_INITDB_ROOT_USERNAME"

@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+spec:
+  selector:
+    matchLabels:
+      app: myapp
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      imagePullSecrets:
+      - name: regcred
+      containers:
+      - name: node
+        #image: vcats/egate-api:1.1.4
+        image: nginx
+        resources:
+          limits:
+            memory: "100Mi"
+            cpu: "100m"
+        ports:
+          - containerPort: 80

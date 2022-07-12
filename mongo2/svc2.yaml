@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: mongodb-2-service
+  labels:
+    run: mongodb-2-service
+spec:
+  ports:
+  - port: 27017
+    targetPort: 27017
+    protocol: TCP
+  selector:
+    #defacementComponent: mongodb-0
+    new-label: mongo2

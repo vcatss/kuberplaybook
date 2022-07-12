@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: node
+  labels:
+    app: node
+spec:
+  containers:
+  - name: node
+    image: bitnami/node
+    # resources: {}
+    # command: ["sh"]
+    #args: ["-c", "while true; do echo 'busybox running'; sleep 10;done"]

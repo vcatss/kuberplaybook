@@ -1,0 +1,6 @@
+Server:		10.43.0.10
+Address:	10.43.0.10#53
+
+Name:	10-40-0-2.default.pod.cluster.local
+Address: 10.40.0.2
+

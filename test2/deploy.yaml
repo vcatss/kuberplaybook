@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # tên của deployment
+  name: deployapp
+spec:
+  # số POD tạo ra
+  replicas: 3
+  # thiết lập các POD do deploy quản lý, là POD có nhãn  "app=deployapp"
+  selector:
+    matchLabels:
+      app: deployapp
+  # Định nghĩa mẫu POD, khi cần Deploy sử dụng mẫu này để tạo Pod
+  template:
+    metadata:
+      name: podapp
+      labels:
+        app: deployapp
+    spec:
+      imagePullSecrets:
+      - name: regcred
+      containers:
+      # - name: node
+      #   image: vcats/egate-api:1.1.4
+      #   #image: nginx
+      #   resources:
+      #     limits:
+      #       memory: "100Mi"
+      #       cpu: "100m"
+      #   ports:
+      #     - containerPort: 80
+
+      # - name: mongo
+      #   image: mongo
+      #   command: ["/bin/sh"]
+      #   args: ["-c", "mongod --replSet=rs0 --bind_ip_all"]
+      #   env:
+      #     - name: MONGO_INITDB_ROOT_USERNAME
+      #       value: "admin"
+      #     - name: MONGO_INITDB_ROOT_PASSWORD
+      #       value: "123asd"
+      #   resources:
+      #     limits:
+      #       memory: "200Mi"
+      #       cpu: "200m"
+
+      - name: nginx
+        #image: kasmweb/firefox-mobile:1.10.0-rolling
+        #image: jlesage/firefox
+        image: nginx
+        resources:
+          limits:
+            memory: "300Mi"
+            cpu: "300m"
+        # command: ["/bin/bash"]
+        # args: ["-c", "while true; do echo 'busybox running'; sleep 10;done"]
+        env: 
+          - name: VNC_PW
+            value: "admin"
+        ports:
+          - containerPort: 6901

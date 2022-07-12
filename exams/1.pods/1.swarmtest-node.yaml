@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: pub-app
+  name: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    resources:
+      limits:
+        memory: "3000M"
+        cpu: "2000m"
+    ports:
+      - containerPort: 8085
+      # - containerPort: 8086

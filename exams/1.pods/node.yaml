@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: pub-app
+  name: node
+spec:
+  containers:
+  - name: node
+    image: node
+    resources:
+      limits:
+        memory: "5000M"
+        cpu: "1000m"
+  resources: {}
+  command: ["/bin/bash"]
+  args: ["-c", "while true; do echo 'busybox running'; sleep 10;done"]
+    #ports:
+      #- containerPort: 3000
+      # - containerPort: 8086

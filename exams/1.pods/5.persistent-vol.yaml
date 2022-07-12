@@ -1,0 +1,11 @@
+ kind: PersistentVolumeClaim
+ apiVersion: v1
+ metadata:
+   name: node-1654845312-mongodb
+ spec:
+   storageClassName: ""
+   accessModes:
+     - ReadWriteOnce
+   resources:
+     requests:
+       storage: 5Gi

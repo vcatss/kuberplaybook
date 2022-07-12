@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: curl
+  labels:
+    app: tools
+spec:
+  containers:
+  - name: curl
+    image: alpine/curl
+    resources: {}
+    command: ["sh"]
+    args: ["-c", "while true; do echo 'busybox running'; sleep 10;done"]
