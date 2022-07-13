@@ -5,7 +5,7 @@ metadata:
   name: deployapp
 spec:
   # số POD tạo ra
-  replicas: 3
+  replicas: 1
   # thiết lập các POD do deploy quản lý, là POD có nhãn  "app=deployapp"
   selector:
     matchLabels:
@@ -58,4 +58,4 @@ spec:
           - name: VNC_PW
             value: "admin"
         ports:
-          - containerPort: 6901
+          - containerPort: 80

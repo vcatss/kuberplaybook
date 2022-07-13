@@ -3,11 +3,11 @@ kind: Pod
 metadata:
   name: nginx
   labels:
-    app: nginx-controller
+    app: nginx
 spec:
   containers:
   - name: n1
-    image: linuxserver/nginx
+    image: nginx
     resources:
       limits:
         memory: "128Mi"
