@@ -5,7 +5,7 @@ metadata:
   name: deployapp
 spec:
   # số POD tạo ra
-  replicas: 3
+  replicas: 1
   # thiết lập các POD do deploy quản lý, là POD có nhãn  "app=deployapp"
   selector:
     matchLabels:
@@ -20,35 +20,34 @@ spec:
       imagePullSecrets:
       - name: regcred
       containers:
-
       - name: node
-        image: vcats/egate-api:1.1.4
-        #image: nginx
+        #image: vcats/egate-api:1.1.4
+        image: nginx
         resources:
           limits:
             memory: "100Mi"
             cpu: "100m"
-        # ports:
-        #   - containerPort: 10006
+        ports:
+          - containerPort: 10006
         env: 
           - name: MONGOURI
-            value: "mongodb://admin:123%24root%24@115.75.19.9:10005/fintestsystem?authSource=fintestsystem&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false"
+            value: "mongodb://admin:123asdCat@mongo-0.mongo:27017,mongo-1.mongo:27017/fintestsystem?authSource=fintestsystem&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false"
 
-      - name: mongo
-        image: mongo
-        command: ["/bin/sh"]
-        args: ["-c", "mongod --replSet=rs0 --bind_ip_all"]
-        env:
-          - name: MONGO_INITDB_ROOT_USERNAME
-            value: "admin"
-          - name: MONGO_INITDB_ROOT_PASSWORD
-            value: "123asd"
-        resources:
-          limits:
-            memory: "200Mi"
-            cpu: "200m"
-        ports:
-          - containerPort: 27017
+      # - name: mongo
+      #   image: mongo
+      #   command: ["/bin/sh"]
+      #   args: ["-c", "mongod --replSet=rs0 --bind_ip_all"]
+      #   env:
+      #     - name: MONGO_INITDB_ROOT_USERNAME
+      #       value: "admin"
+      #     - name: MONGO_INITDB_ROOT_PASSWORD
+      #       value: "123asd"
+      #   resources:
+      #     limits:
+      #       memory: "200Mi"
+      #       cpu: "200m"
+      #   ports:
+      #     - containerPort: 27017
 
       # - name: nginx
       #   #image: kasmweb/firefox-mobile:1.10.0-rolling

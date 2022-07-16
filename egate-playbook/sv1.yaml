@@ -16,16 +16,16 @@ spec:
     protocol: TCP
     port: 10006
     targetPort: 10006
-    #nodePort: 30080
-  - name: mongo
-    port: 27017
-    targetPort: 27017
-    #nodePort: 30081
-  - name: frontend
-    port: 10000
-    targetPort: 10000
-    #nodePort: 30082
-  - name: socket
-    port: 5800
-    targetPort: 5800
-    #nodePort: 30000
+  #   #nodePort: 30080
+  # - name: mongo
+  #   port: 27017
+  #   targetPort: 27017
+  #   #nodePort: 30081
+  # - name: frontend
+  #   port: 10000
+  #   targetPort: 10000
+  #   #nodePort: 30082
+  # - name: socket
+  #   port: 5800
+  #   targetPort: 5800
+  #   #nodePort: 30000
