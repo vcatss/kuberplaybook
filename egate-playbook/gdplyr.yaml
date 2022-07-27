@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gd
+spec:
+  selector:
+    matchLabels:
+      app: gd
+  template:
+    metadata:
+      labels:
+        app: gd
+    spec:
+      containers:
+      - image: vcats/gdplyr:1.0.1
+        name: gd
+        # env:
+        # - name: MYSQL_ROOT_PASSWORD
+        #   value: "123asd"
+        ports:
+        - containerPort: 80
+          name: gd

@@ -20,18 +20,29 @@ spec:
       imagePullSecrets:
       - name: regcred
       containers:
-      - name: node
-        #image: vcats/egate-api:1.1.4
-        image: nginx
+      - name: mysql
+        image: "mysql:5.6"
+        env: 
+          - name: MYSQL_ROOT_PASSWORD
+            value: "123asd"
+        ports: 
+          - containerPort: 3306
         resources:
           limits:
-            memory: "100Mi"
+            memory: "300Mi"
             cpu: "100m"
-        ports:
-          - containerPort: 10006
-        env: 
-          - name: MONGOURI
-            value: "mongodb://admin:123asdCat@mongo-0.mongo:27017,mongo-1.mongo:27017/fintestsystem?authSource=fintestsystem&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false"
+      # - name: node
+      #   #image: vcats/egate-api:1.1.4
+      #   image: phpmyadmin:fpm-alpine
+      #   resources:
+      #     limits:
+      #       memory: "100Mi"
+      #       cpu: "100m"
+      #   ports:
+      #     - containerPort: 8080
+        # env: 
+        #   - name: MONGOURI
+        #     value: "mongodb://admin:123asdCat@mongo-0.mongo:27017,mongo-1.mongo:27017/fintestsystem?authSource=fintestsystem&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false"
 
       # - name: mongo
       #   image: mongo
