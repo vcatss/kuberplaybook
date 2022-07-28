@@ -1,0 +1,76 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   # tên của deployment
+#   name: deployapp
+# spec:
+#   # số POD tạo ra
+#   replicas: 1
+#   # thiết lập các POD do deploy quản lý, là POD có nhãn  "app=deployapp"
+#   selector:
+#     matchLabels:
+#       app: deployapp
+#   # Định nghĩa mẫu POD, khi cần Deploy sử dụng mẫu này để tạo Pod
+#   template:
+#     metadata:
+#       name: podapp
+#       labels:
+#         app: deployapp
+#     spec:
+#       containers:
+#       - name: postgres
+#         image: postgres:alpine3.16
+#         resources:
+#           limits:
+#             memory: "300Mi"
+#             cpu: "300m"
+#         env: 
+#           - name: POSTGRES_PASSWORD
+#             value: "123asd"
+#         # command: ["/bin/bash"]
+#         # args: ["-c", "while true; do echo 'busybox running'; sleep 10;done"]
+#         ports:
+#           - containerPort: 5432
+# ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # tên của deployment
+  name: app-tele
+spec:
+  # số POD tạo ra
+  replicas: 1
+  # thiết lập các POD do deploy quản lý, là POD có nhãn  "app=deployapp"
+  selector:
+    matchLabels:
+      app: app-tele
+  # Định nghĩa mẫu POD, khi cần Deploy sử dụng mẫu này để tạo Pod
+  template:
+    metadata:
+      name: app-tele
+      labels:
+        app: app-tele
+    spec:
+      containers:
+      - name: app-tele
+        image: vcats/teledrive:1.0.4
+        resources:
+          limits:
+            memory: "300Mi"
+            cpu: "300m"
+        env: 
+          - name: TG_API_ID
+            value: "15763483"
+          - name: TG_API_HASH
+            value: "42297660bc87183e5db8c54527974c09"
+          - name: ADMIN_USERNAME
+            value: "vcat"s
+          - name: DB_PASSWORD
+            value: "123asd"
+          - name: DATABASE_URL
+            value: "postgresql://postgres:123asd@10.42.0.53:5432/teledrive"
+        
+        # command: ["/bin/bash"]
+        # args: ["-c", "while true; do echo 'busybox running'; sleep 10;done"]
+        ports:
+          - containerPort: 4000
