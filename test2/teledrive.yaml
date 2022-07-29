@@ -53,7 +53,7 @@ spec:
     spec:
       containers:
       - name: app-tele
-        image: vcats/teledrive:1.0.4
+        image: vcats/teledrive:1.0.5
         resources:
           limits:
             memory: "300Mi"
@@ -64,7 +64,7 @@ spec:
           - name: TG_API_HASH
             value: "42297660bc87183e5db8c54527974c09"
           - name: ADMIN_USERNAME
-            value: "vcat"s
+            value: "vcat"
           - name: DB_PASSWORD
             value: "123asd"
           - name: DATABASE_URL
@@ -74,3 +74,31 @@ spec:
         # args: ["-c", "while true; do echo 'busybox running'; sleep 10;done"]
         ports:
           - containerPort: 4000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tele-service
+spec:
+  selector:
+    app: app-tele
+  type: NodePort
+  ports:
+  - name: tele
+    protocol: TCP
+    port: 4000 
+    nodePort: 32593
+---
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: tele-ingress
+spec:
+  routes:
+  - kind: Rule
+    match: Host(`tele.e-gate.vn`)    # [3]
+    priority: 10                    # [4]
+    services:
+    - name: tele-service
+      port: 4000
