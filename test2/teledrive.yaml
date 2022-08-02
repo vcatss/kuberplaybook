@@ -32,63 +32,63 @@
 #         ports:
 #           - containerPort: 5432
 # ---
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  # tên của deployment
-  name: app-tele
-spec:
-  # số POD tạo ra
-  replicas: 1
-  # thiết lập các POD do deploy quản lý, là POD có nhãn  "app=deployapp"
-  selector:
-    matchLabels:
-      app: app-tele
-  # Định nghĩa mẫu POD, khi cần Deploy sử dụng mẫu này để tạo Pod
-  template:
-    metadata:
-      name: app-tele
-      labels:
-        app: app-tele
-    spec:
-      containers:
-      - name: app-tele
-        image: vcats/teledrive:1.0.5
-        resources:
-          limits:
-            memory: "300Mi"
-            cpu: "300m"
-        env: 
-          - name: TG_API_ID
-            value: "15763483"
-          - name: TG_API_HASH
-            value: "42297660bc87183e5db8c54527974c09"
-          - name: ADMIN_USERNAME
-            value: "vcat"
-          - name: DB_PASSWORD
-            value: "123asd"
-          - name: DATABASE_URL
-            value: "postgresql://postgres:123asd@10.42.0.53:5432/teledrive"
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   # tên của deployment
+#   name: app-tele
+# spec:
+#   # số POD tạo ra
+#   replicas: 1
+#   # thiết lập các POD do deploy quản lý, là POD có nhãn  "app=deployapp"
+#   selector:
+#     matchLabels:
+#       app: app-tele
+#   # Định nghĩa mẫu POD, khi cần Deploy sử dụng mẫu này để tạo Pod
+#   template:
+#     metadata:
+#       name: app-tele
+#       labels:
+#         app: app-tele
+#     spec:
+#       containers:
+#       - name: app-tele
+#         image: vcats/teledrive:1.0.9
+#         resources:
+#           limits:
+#             memory: "300Mi"
+#             cpu: "300m"
+#         env: 
+#           - name: TG_API_ID
+#             value: "15763483"
+#           - name: TG_API_HASH
+#             value: "42297660bc87183e5db8c54527974c09"
+#           - name: ADMIN_USERNAME
+#             value: "vcat"
+#           - name: DB_PASSWORD
+#             value: "123asd"
+#           - name: DATABASE_URL
+#             value: "postgresql://postgres:123asd@10.42.0.53:5432/teledrive"
         
-        # command: ["/bin/bash"]
-        # args: ["-c", "while true; do echo 'busybox running'; sleep 10;done"]
-        ports:
-          - containerPort: 4000
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: tele-service
-spec:
-  selector:
-    app: app-tele
-  type: NodePort
-  ports:
-  - name: tele
-    protocol: TCP
-    port: 4000 
-    nodePort: 32593
----
+#         # command: ["/bin/bash"]
+#         # args: ["-c", "while true; do echo 'busybox running'; sleep 10;done"]
+#         ports:
+#           - containerPort: 4000
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: tele-service
+# spec:
+#   selector:
+#     app: app-tele
+#   type: NodePort
+#   ports:
+#   - name: tele
+#     protocol: TCP
+#     port: 4000 
+#     nodePort: 32593
+# ---
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
@@ -98,6 +98,12 @@ spec:
   routes:
   - kind: Rule
     match: Host(`tele.e-gate.vn`)    # [3]
+    priority: 10                    # [4]
+    services:
+    - name: tele-service
+      port: 4000
+  - kind: Rule
+    match: Host(`tele.thuviengiaoandientu.com`)    # [3]
     priority: 10                    # [4]
     services:
     - name: tele-service
